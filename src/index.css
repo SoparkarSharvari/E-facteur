@@ -5,9 +5,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #FFF7E7;
-  background-image: url('/Users/sharvarisoparkar/Desktop/E-facteur/e-facteur_website/src/images/Background.png'); /* Use the correct URL format */
-  background-size: cover; 
+  background-color:#FFF4E2;
+  background-image:url(./big.png);
 }
 
 code {
