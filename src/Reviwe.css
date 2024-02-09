@@ -1,0 +1,54 @@
+.reviewcard{
+    width: 872px;
+    height: 350px;
+    flex-shrink: 0;
+    border-radius: 16px;
+    background: var(--Theme-Colors-White, #FFF);
+    box-shadow: 0px 0px 20px 5px rgba(0, 19, 119, 0.05);
+    text-align: center;
+    margin-right:40px;
+    margin-top:20px;
+    margin-bottom:20px;
+    margin-left:50px;
+    
+}
+.review--head{
+    color: var(--Theme-Colors-Danger, #F95C19);
+    font-family: Raleway;
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 120%; 
+    text-align: center;
+}
+.review--details{
+    text-align: left;
+    padding:10px; 
+}
+.signature{
+    width: 200px;
+    height: 50px;
+    flex-shrink: 0;
+    background-color:var(--Theme-Colors-White, #FFF);
+    text-align: right;
+    margin-left:auto;
+    padding-right:40px;
+}
+.review--name{
+color: var(--Gray-1000, #222132);
+text-align: right;
+font-family: Raleway;
+font-size: 16px;
+font-style: normal;
+font-weight: 700;
+line-height: 120%; 
+}
+.review--des{
+color: var(--Gray-800, #464558);
+font-family: Raleway;
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: 120%;
+
+}
