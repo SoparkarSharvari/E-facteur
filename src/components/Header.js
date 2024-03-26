@@ -1,7 +1,7 @@
 import React from 'react'
-import start from './start.png'
-import end from './end.png'
-import './Header.css'
+import start from '/Users/sharvarisoparkar/Desktop/E-facteur/e-facteur_website/src/start.png'
+import end from '/Users/sharvarisoparkar/Desktop/E-facteur/e-facteur_website/src/end.png'
+import '/Users/sharvarisoparkar/Desktop/E-facteur/e-facteur_website/src/header.css'
 
 export default function Header(){
     return(

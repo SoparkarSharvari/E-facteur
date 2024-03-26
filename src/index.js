@@ -4,6 +4,7 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { Login } from './components/loginSignupPage';
 import App from '/Users/sharvarisoparkar/Desktop/E-facteur/e-facteur_website/src/App.js'
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>

@@ -1,10 +1,10 @@
-import Recat from 'react'
-import './Reviwe.css'
-import five from './five.png'
-import four from './four.png'
-import three from './three.png'
-import two from './two.png'
-import one from './one.png'
+import React from 'react';
+import '/Users/sharvarisoparkar/Desktop/E-facteur/e-facteur_website/src/Reviwe.css'
+import five from '/Users/sharvarisoparkar/Desktop/E-facteur/e-facteur_website/src/five.png'
+import four from '/Users/sharvarisoparkar/Desktop/E-facteur/e-facteur_website/src/four.png'
+import three from '/Users/sharvarisoparkar/Desktop/E-facteur/e-facteur_website/src/three.png'
+import two from '/Users/sharvarisoparkar/Desktop/E-facteur/e-facteur_website/src/two.png'
+import one from '/Users/sharvarisoparkar/Desktop/E-facteur/e-facteur_website/src/one.png'
 export default function Review(props){
     var stars
     if(props.stars==="5"){

@@ -18,11 +18,14 @@ import vector21 from '/Users/sharvarisoparkar/Desktop/E-facteur/e-facteur_websit
 import vector22 from '/Users/sharvarisoparkar/Desktop/E-facteur/e-facteur_website/src/vector22.png'
 import vector23 from '/Users/sharvarisoparkar/Desktop/E-facteur/e-facteur_website/src/vector23.png'
 import nameLogoVector from '/Users/sharvarisoparkar/Desktop/E-facteur/e-facteur_website/src/Logo(1).png'
-import Home from '/Users/sharvarisoparkar/Desktop/E-facteur/e-facteur_website/src/components/Home.js'
-
-import {auth,provider} from "./config";
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+import { auth } from "./config"; 
+import {provider} from "./config";
 import {signInWithPopup} from "firebase/auth";
-
 
 const Component = styled(Box)`
     padding: 25px 35px;
@@ -68,18 +71,6 @@ const Text = styled(Typography)`
     font-size: 12px;
 `;
 
-// const Image = styled('img')({
-//   width: 100,
-//   display: 'flex',
-//   margin: 'auto',
-//   padding: '40px 0 0'
-// });
-// const Name = styled(Typography)`
-//   algin:center;
-//   font-size: 18px;
-//   font-weight: bold;
-//   margin-left:80px;
-// `;
 const Error = styled(Typography)`
     font-size: 10px;
     color: #ff6161;
@@ -97,6 +88,19 @@ const Tagline = {
   margin:'0px',
 }
 
+const ProSpan = styled('span')({
+  display: 'inline-block',
+  height: '1em',
+  width: '1em',
+  verticalAlign: 'middle',
+  marginLeft: '0.3em',
+  marginBottom: '0.08em',
+  backgroundSize: 'contain',
+  backgroundRepeat: 'no-repeat',
+  backgroundImage: 'url(https://mui.com/static/x/pro.svg)',
+});
+
+
 const Login = (props) => {
 
   const [account, toggleAccount] = useState('login');
@@ -107,10 +111,11 @@ const Login = (props) => {
   const [value,setValue] = useState('')
   const navigate = useNavigate ();
 
+
   useEffect(() => {
     showError(false);
     setValue(localStorage.getItem('email'))
-}, [login])
+  }, [login])
 
 const toggleSignup = () => {
   account === 'signup' ? toggleAccount('login') : toggleAccount('signup');
@@ -122,9 +127,29 @@ const handleClick =()=>{
       navigate('/home');
   })
 }
-// useEffect(()=>{
-//         setValue(localStorage.getItem('email'))
-//     })
+const handleSignUp =async (e)=>{
+  const { name,username,password} = signup;
+  e.preventDefault();
+  const options ={
+    method : 'POST',
+    headers:{
+      'Content-type':'application/json'
+    },
+    body:JSON.stringify({
+      name,username,password
+    })
+  }
+  const res = await fetch(
+    'https://newef-2bcd7-default-rtdb.firebaseio.com/UserData.json',
+    options
+    )
+    if(res){
+      alert("Message Sent ")
+    }
+    else{
+      alert("Error Sent ")
+    }
+}
 
 const onValueChange = (form, field, value) => {
   if (form === 'login') {
@@ -134,10 +159,9 @@ const onValueChange = (form, field, value) => {
   }
 };
 
-  return (
+return (
     
     <div class="background-container" style={{width:'100%'}}>
-      
     <Box sx={{ flexGrow: 2 }}>
       <Grid container spacing={1}>
         <Grid item xs={6}>
@@ -158,7 +182,7 @@ const onValueChange = (form, field, value) => {
                 <img src={vector3} alt="SVG" width='200px' style={{marginLeft:'105px'}}/><br></br>
               </> 
                 :
-                <>
+              <>
                 <img src={vector21} alt="SVG" width='150px' style={{marginLeft:'0px',marginBottom:'8px'}}/>
                 <Grid container spacing={1}>
                   <Grid item xs={6} style={{ height: '10px' }}>
@@ -174,7 +198,7 @@ const onValueChange = (form, field, value) => {
         </Grid>
         <Grid item xs={6}>
           <OuterBox style={{backgroundColor:'rgba(255, 255, 255, 0.3)'}}> 
-        <img src={nameLogoVector} alt="SVG" width='168px' height='36px' style={{paddingTop:'30px',marginLeft:'30px',marginBottom:'0px'}}/>
+          <img src={nameLogoVector} alt="SVG" width='168px' height='36px' style={{paddingTop:'30px',marginLeft:'30px',marginBottom:'0px'}}/>
         {
         account === 'login' ?
           <Component className='loginBox'>
@@ -189,10 +213,7 @@ const onValueChange = (form, field, value) => {
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
-              <IconButton
-                onClick={() => setShowPassword(!showPassword)}
-                edge="end"
-              >
+              <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
                 {showPassword ? <Visibility /> : <VisibilityOff />}
               </IconButton>
             </InputAdornment>
@@ -203,7 +224,7 @@ const onValueChange = (form, field, value) => {
               <LoginButton variant="contained" >Login</LoginButton>
               <Text style={{ textAlign: 'center' }}>OR</Text>
               <SignupButton onClick={() => toggleSignup()} style={{ marginBottom: 20 }}>Create an account</SignupButton> 
-              {/* diff authentication apis */}
+          
               <Stack direction="row" spacing={4} style={{marginLeft:'30px', marginTop:'0px'}}>
               
               <Button variant="outlined" style={{background:'white'}} onClick={handleClick}>
@@ -220,13 +241,26 @@ const onValueChange = (form, field, value) => {
           :
           <Component className='signInBox'>
               <TextField id="outlined-basic1" label="Full Name"onChange={(e) => onValueChange('signup', 'name', e.target.value)}     value={signup.name} variant="outlined" />
-              <TextField id="outlined-basic2" label="UserName" onChange={(e) => onValueChange('signup', 'username', e.target.value)} value={signup.username}variant="outlined" />
+              <TextField id="outlined-basic2" label="Email id" onChange={(e) => onValueChange('signup', 'username', e.target.value)} value={signup.username}variant="outlined" />
+              <FormControl>
+      <FormLabel id="demo-row-radio-buttons-group-label">Gender</FormLabel>
+      <RadioGroup
+        row
+        aria-labelledby="demo-row-radio-buttons-group-label"
+        name="row-radio-buttons-group"
+      >
+        <FormControlLabel value="female" control={<Radio />} label="Female" />
+        <FormControlLabel value="male" control={<Radio />} label="Male" />
+        <FormControlLabel value="other" control={<Radio />} label="Other" />
+      </RadioGroup>
+    </FormControl>
+
               <TextField id="outlined-basic3" type="password"label="Password" onChange={(e) => onValueChange('signup', 'password', e.target.value)} value={signup.password}variant="outlined" />
-              <SignupButton >Signup</SignupButton>
+              <SignupButton onClick={handleSignUp}>Signup</SignupButton>
               <Text style={{ textAlign: 'center' }}>OR</Text>
               <LoginButton variant="contained" onClick={() => toggleSignup()}style={{ marginBottom: 20 }}>Already have an account</LoginButton>
               <Stack direction="row" spacing={4} style={{marginLeft:'30px', marginTop:'0px'}}>
-              <Button variant="outlined" style={{background:'white'}}>
+                <Button variant="outlined" style={{background:'white'}}>
                   <GoogleIcon></GoogleIcon>
                 </Button>
                 <Button variant="outlined" style={{background:'white'}}>
@@ -245,4 +279,5 @@ const onValueChange = (form, field, value) => {
     </div>
   )
 }
+
 export default Login;
