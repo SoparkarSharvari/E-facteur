@@ -26,7 +26,6 @@ import FormLabel from '@mui/material/FormLabel';
 import { auth } from "./config"; 
 import {provider} from "./config";
 import {signInWithPopup} from "firebase/auth";
-
 const Component = styled(Box)`
     padding: 25px 35px;
     display: flex;
@@ -243,19 +242,24 @@ return (
               <TextField id="outlined-basic1" label="Full Name"onChange={(e) => onValueChange('signup', 'name', e.target.value)}     value={signup.name} variant="outlined" />
               <TextField id="outlined-basic2" label="Email id" onChange={(e) => onValueChange('signup', 'username', e.target.value)} value={signup.username}variant="outlined" />
               <FormControl>
-      <FormLabel id="demo-row-radio-buttons-group-label">Gender</FormLabel>
-      <RadioGroup
-        row
-        aria-labelledby="demo-row-radio-buttons-group-label"
-        name="row-radio-buttons-group"
-      >
-        <FormControlLabel value="female" control={<Radio />} label="Female" />
-        <FormControlLabel value="male" control={<Radio />} label="Male" />
-        <FormControlLabel value="other" control={<Radio />} label="Other" />
-      </RadioGroup>
-    </FormControl>
-
+                <FormLabel id="demo-row-radio-buttons-group-label">Gender</FormLabel>
+                <RadioGroup
+                  row
+                  aria-labelledby="demo-row-radio-buttons-group-label"
+                  name="row-radio-buttons-group"
+                >
+                  <FormControlLabel value="female" control={<Radio />} label="Female" />
+                  <FormControlLabel value="male" control={<Radio />} label="Male" />
+                  <FormControlLabel value="other" control={<Radio />} label="Other" />
+                </RadioGroup>
+              </FormControl>
+              <FormLabel id="demo-row-radio-buttons-group-label">Date of birth</FormLabel>
+              
+              <input style={{ height: '55px' , backgroundColor:'transparent' , borderRadius:'3.5px',boxShadow:'inherit',border: '1px solid #C3BEB5'}} type="date" id="birthday" name="birthday" />
+              <TextField id="outlined-basic3" type="Phone Number"label="Phone Number" onChange={(e) => onValueChange('signup', 'password', e.target.value)} value={signup.password}variant="outlined" />
               <TextField id="outlined-basic3" type="password"label="Password" onChange={(e) => onValueChange('signup', 'password', e.target.value)} value={signup.password}variant="outlined" />
+              <TextField id="outlined-basic3" type="password"label="Confirm Password" onChange={(e) => onValueChange('signup', 'password', e.target.value)} value={signup.password}variant="outlined" />
+              
               <SignupButton onClick={handleSignUp}>Signup</SignupButton>
               <Text style={{ textAlign: 'center' }}>OR</Text>
               <LoginButton variant="contained" onClick={() => toggleSignup()}style={{ marginBottom: 20 }}>Already have an account</LoginButton>
