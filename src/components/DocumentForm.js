@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect ,useContext} from 'react';
 import axios from 'axios';
 import inm from '../ServicesPage.svg';
 import '../style/DocumentForm.css';
 import Navbar from './Navbar';
+import { DataContext } from '../context/DataProvider';
 const DocumentForm = (props) => {
   console.log(props.distance);
   const [userData, setUserData] = useState({});
+  const { account } = useContext(DataContext);
+
   const [loginFormData, setLoginFormData] = useState({
     loginEmail: '',
     loginPassword: ''
@@ -13,8 +16,86 @@ const DocumentForm = (props) => {
   const [signupFormData, setSignupFormData] = useState({
     signupName: '',
     signupOrigin: '',
-    signupDestination: ''
+    signupDestination: '',
+    signupDestination1: '',
+    signupDestination2: '',
+    signupDestination3: ''
   });
+//   useEffect(() => {
+//    handleGetData()
+//   },[])
+//   const handleGetData = async (e) => {
+//     debugger
+//     try {
+//         const response = await axios.get('https://newef-2bcd7-default-rtdb.firebaseio.com/UserData.json');
+//         console.log(response.data)
+//         const userData = response.data;
+//         for (const userId in userData) {
+//             const user = userData[userId];
+//             if (user.Fullname === account.Fullname) {
+//                 console.log(userId); // Logging userId
+//                 console.log(user.Gender); // Accessing Gender from user object
+//                 console.log(user.residence); // Accessing residence from user object
+//                 console.log(user.DateOfBirth); // Accessing DateOfBirth from user object
+                
+//                 // Calculate age
+//                 const dob = new Date(user.DateOfBirth);
+//                 const ageDiffMs = Date.now() - dob.getTime();
+//                 const ageDate = new Date(ageDiffMs); // miliseconds from epoch
+//                 const age = Math.abs(ageDate.getUTCFullYear() - 1970);
+
+//                 console.log(age); // Logging age
+//             }
+//         }
+//     } catch (error) {
+//         console.error('Error handling service click:', error);
+//     }
+// }
+
+const handleGetDataAndServiceClick = async (e) => {
+    debugger;
+    try {
+        const response = await axios.get('https://newef-2bcd7-default-rtdb.firebaseio.com/UserData.json');
+        console.log(response.data);
+        const userData = response.data;
+        for (const userId in userData) {
+            const user = userData[userId];
+            if (user.Fullname === account.Fullname) {
+                console.log(userId); // Logging userId
+                console.log(user.Gender); // Accessing Gender from user object
+                console.log(user.residence); // Accessing residence from user object
+                console.log(user.DateOfBirth); // Accessing DateOfBirth from user object
+                
+                // Calculate age
+                const dob = new Date(user.DateOfBirth);
+                const ageDiffMs = Date.now() - dob.getTime();
+                const ageDate = new Date(ageDiffMs); // miliseconds from epoch
+                const age = Math.abs(ageDate.getUTCFullYear() - 1970);
+
+                console.log(age); // Logging age
+                const gender=user.Gender
+                const residence =user.residence
+                // Handle service click
+                try {
+                    const newEntry = {
+                        userId,
+                        residence,
+                        gender,
+                        age,
+                        courierServiceName: user.ServiceProvidername, // Access the ServiceProvidername property from user object
+                        createdAt: new Date().toISOString(),
+                    };
+                    
+                    await axios.post('https://newef-2bcd7-default-rtdb.firebaseio.com/Newdata.json', newEntry);
+                } catch (error) {
+                    console.error('Error handling service click:', error);
+                }
+            }
+        }
+    } catch (error) {
+        console.error('Error handling service click:', error);
+    }
+};
 
     const handleSignupClick = () => {
         const slider = document.querySelector(".slider");
@@ -30,22 +111,22 @@ const DocumentForm = (props) => {
         formSection.classList.remove("form-section-move");
     };
 
-    const handleServiceClick = async (userId, userData) => {
-        try {
-          const { distance, dateOfBirth, gender } = userData;
-          const newEntry = {
-            distance : props.distance,
-            dateOfBirth,
-            gender,
-            courierServiceName: userData.ServiceProvidername, // Access the ServiceProvidername property
-            createdAt: new Date().toISOString(),
-          };
+    // const handleServiceClick = async (userId, userData) => {
+    //     try {
+    //     //   const { distance, dateOfBirth, gender } = userData;
+    //       const newEntry = {
+    //         // distance,
+    //         // dateOfBirth,
+    //         // gender,
+    //         courierServiceName: userData.ServiceProvidername, // Access the ServiceProvidername property
+    //         createdAt: new Date().toISOString(),
+    //       };
       
-          await axios.post('https://newef-2bcd7-default-rtdb.firebaseio.com/Newdata.json', newEntry); // Make sure to include '.json' in the URL
-        } catch (error) {
-          console.error('Error handling service click:', error);
-        }
-      };
+    //       await axios.post('https://newef-2bcd7-default-rtdb.firebaseio.com/Newdata.json', newEntry); // Make sure to include '.json' in the URL
+    //     } catch (error) {
+    //       console.error('Error handling service click:', error);
+    //     }
+    //   };
   const handleLoginChange = (e) => {
     const { name, value } = e.target;
     setLoginFormData({ ...loginFormData, [name]: value });
@@ -75,22 +156,23 @@ const DocumentForm = (props) => {
           console.error('Error fetching data:', error);
         }
       };
+
       const renderTable = () => {
         const rows = [];
       
         for (const userId in userData) {
           const user = userData[userId];
-          const loginPassword = parseInt(loginFormData.loginPassword) || 0;
-          const distance = parseInt(props.distance) || 0;
+          const loginPassword = parseInt(loginFormData.loginPassword) || 0 || parseInt(signupFormData.signupName);
+          const distance = parseInt(props.distance)||1 ;
           const Chargeperkm = parseInt(user.Chargeperkm) || 0;
-          const price = loginPassword * Chargeperkm + distance * Chargeperkm;
+          const price = loginPassword/1000 * Chargeperkm + distance * Chargeperkm;
       
           rows.push(
             <tr key={userId}>
               <td>{userId}</td>
               <td>{user.ServiceProvidername}</td>
               <td>{price}</td>
-              <td><button id={userId} onClick={() => handleServiceClick(userId, user)}>Add Entry</button></td>
+              <td><button id={userId} onClick={() => handleGetDataAndServiceClick()}>Place Order</button></td>
             </tr>
           );
         }
@@ -133,24 +215,29 @@ const DocumentForm = (props) => {
         
         <div className="signup-box" >
             <form name="register" onSubmit={handleNonDocument}>
-                    <input type="text" className="name ele" name="signupName" placeholder="weight (kg)" value={signupFormData.signupName} onChange={handleSignupChange} required />
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                    <input type="text" id="1" className="name ele" name="signupName" placeholder="weight (grams)" value={signupFormData.signupName} onChange={handleSignupChange} required />
                     <br />
                     <br />
-                    <input type="text" className="name ele" name="signupOrigin" placeholder="length" value={signupFormData.signupOrigin} onChange={handleSignupChange} required />
+                    <input type="text"  id="2" className="name ele" name="signupOrigin" placeholder="length" value={signupFormData.signupOrigin} onChange={handleSignupChange} required />
                 <br />
                 <br />
-                    <input type="text" className="password ele" name="signupDestination" placeholder="width" value={signupFormData.signupDestination} onChange={handleSignupChange} required />
+                    <input type="text"  id="3" className="password ele" name="signupDestination" placeholder="width" value={signupFormData.signupDestination} onChange={handleSignupChange} required />
                     <br />
                     <br />
-                    <input type="text" className="password ele" name="signupDestination" placeholder="height" value={signupFormData.signupDestination} onChange={handleSignupChange} required />
+                    <input type="text"  id="4" className="password ele" name="signupDestination1" placeholder="height" value={signupFormData.signupDestination1} onChange={handleSignupChange} required />
                 <br />
                     <br />
-                <input type="text" className="password ele" name="signupDestination" placeholder="Shipment Value (INR)" value={signupFormData.signupDestination} onChange={handleSignupChange} required />
+                <input type="text"   id="5" className="password ele" name="signupDestination2" placeholder="Shipment Value (INR)" value={signupFormData.signupDestination2} onChange={handleSignupChange} required />
                     <br />
-                    <br /><input type="text" className="password ele" name="signupDestination" placeholder="select content" value={signupFormData.signupDestination} onChange={handleSignupChange} required />
+                    <br /><input type="text"  id="6" className="password ele" name="signupDestination3" placeholder="select content" value={signupFormData.signupDestination3} onChange={handleSignupChange} required />
                     <br />
                 <br />
-                    <center><input type="submit" className="clkbtn" name="Register" value="Submit" /></center>
+                    <center><input type="submit"  id="7" className="clkbtn" name="Register" value="Submit" /></center>
             </form>
                      </div>
                      </div>

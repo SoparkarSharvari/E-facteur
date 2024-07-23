@@ -1,7 +1,7 @@
 import React, { createContext, useState } from "react";
 export const DataContext = createContext(null);
 const DataProvider = ({ children }) => {
-    const [account, setAccount] = useState({ Fullname: ''});
+    const [account, setAccount] = useState({ Fullname: '',Age:'',Gender:''});
     
     return (
         <DataContext.Provider value={{ 

@@ -32,6 +32,8 @@ function HomeService() {
             <div className="App">  
             <Navbar />
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+  {/* <iframe title="Dashboard e-facteur" width="1240" height="741.25" src="https://app.powerbi.com/reportEmbed?reportId=ac21d564-28b4-4d9d-b253-3d9efd95ccbd&autoAuth=true&ctid=0ed51ad7-52cc-4234-b54a-76b82d40b5c3" frameborder="0" allowFullScreen="true"></iframe> */}
+  {/* <iframe title="Dashboard e-facteur" width="1240" height="741.25" src="https://app.powerbi.com/reportEmbed?reportId=ac21d564-28b4-4d9d-b253-3d9efd95ccbd&autoAuth=true&ctid=0ed51ad7-52cc-4234-b54a-76b82d40b5c3" frameborder="0" allowFullScreen="true"></iframe> */}
   <iframe title="Dashboard e-facteur" width="1240" height="741.25" src="https://app.powerbi.com/reportEmbed?reportId=ac21d564-28b4-4d9d-b253-3d9efd95ccbd&autoAuth=true&ctid=0ed51ad7-52cc-4234-b54a-76b82d40b5c3" frameborder="0" allowFullScreen="true"></iframe>
 </div>
 

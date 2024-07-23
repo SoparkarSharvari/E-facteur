@@ -133,7 +133,7 @@ const handleClick2 =()=>{
   })
 }
 const handleSignUp =async (e)=>{
-  const {  Fullname,Email,Gender,DateOfBirth,phone,password,confirmPasswaord} = signup;
+  const {  Fullname,Email,Gender,DateOfBirth,residence,phone,password,confirmPasswaord} = signup;
   e.preventDefault();
   if(confirmPasswaord == password){
     const options ={
@@ -142,7 +142,7 @@ const handleSignUp =async (e)=>{
         'Content-type':'application/json'
       },
       body:JSON.stringify({
-        Fullname,Email,Gender,DateOfBirth,phone,password,confirmPasswaord,
+        Fullname,Email,Gender,DateOfBirth,residence,phone,password,confirmPasswaord,
       })
     }
     const res = await fetch(
@@ -239,25 +239,7 @@ const handleServerLogin = async (e) => {
     alert("Something went wrong. Please try again later.");
   }
 };
-// const handleServerLogin = async (e) => {
-//   setAccount({ Fullname: Servicelogin.ServiceProvidername });
-//   e.preventDefault();
-//   try {
-//     const response = await axios.get('https://newef-2bcd7-default-rtdb.firebaseio.com/serviceprovider.json');
-//     const userData = response.data;
-//     for (const userId in userData) {
-//       const user = userData[userId];
-//       if (user.ServiceProvidername === Servicelogin.Fullname && user.password === Servicelogin.password) {
-//         navigate("/home", { state: { id: user.Fullname } });
-//         return; 
-//       }
-//     }
-//     alert("User does not exist or incorrect password");
-//   } catch (error) {
-//     console.error('Error occurred while logging in:', error);
-//     alert("Something went wrong. Please try again later.");
-//   }
-// };
+
 const onValueChange = (form, field, value) => {
   if (form === 'login') {
     setLogin((prevLogin) => ({ ...prevLogin, [field]: value }));
@@ -412,6 +394,8 @@ return (
               </RadioGroup>
             </FormControl>
             
+            <TextField id="outlined-basic17" label="Residence" onChange={(e) => onValueChange('signup', 'residence', e.target.value)} value={signup.residence}variant="outlined" />
+            <br></br>
             <input style={{ height: '55px',color:'#67645F',fontSize:'20px',paddingLeft:'23px' , backgroundColor:'transparent' , borderRadius:'3.5px',border: '1px solid #c3beb5'}} type="date" id="birthday" name="birthday"  onChange={(e) => onValueChange('signup','DateOfBirth', e.target.value)}/>
             <TextField id="outlined-basic14" type="Phone Number"label="Phone Number" onChange={(e) => onValueChange('signup', 'phone', e.target.value)} value={signup.phone}variant="outlined" />
             <TextField id="outlined-basic15" type="password"label="Password" onChange={(e) => onValueChange('signup', 'password', e.target.value)} value={signup.password}variant="outlined" />
